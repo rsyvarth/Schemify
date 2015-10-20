@@ -2,7 +2,7 @@
 
 var translations = {
   NAV: {
-    TITLE: 'Simple Blog',
+    TITLE: 'Schemify',
     HOME: 'Home',
     ABOUT: 'About',
     CREATE: 'Create',
@@ -12,9 +12,9 @@ var translations = {
     UNSUBSCRIBE: 'Unsubscribe'
   },
   FOOT: {
-    TITLE: 'Simple Blog',
+    TITLE: 'Schemify',
     GITHUB: 'Github',
-    BY: 'By Robert Syvarth & Jacob Walsh'
+    BY: 'By Jeremiah Bartlett, Lance Kelley, Robert Syvarth, Jacob Walsh'
   },
   HOME: {
     BACK: 'Back',
