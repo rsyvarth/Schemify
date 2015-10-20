@@ -1,0 +1,75 @@
+application: simpleblog-1082
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+default_expiration: "5d"
+
+builtins:
+- appstats: on
+- admin_redirect: on
+- deferred: on
+- remote_api: on
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"
+
+inbound_services:
+- warmup
+
+skip_files:
+- (.*)bower_components(.*)
+- (.*)node_modules(.*)
+
+handlers:
+- url: /favicon.ico
+  static_files: application/static/img/favicon.ico
+  upload: application/static/img/favicon.ico
+
+- url: /robots.txt
+  static_files: application/static/robots.txt
+  upload: application/static/robots.txt
+
+- url: /gae_mini_profiler/static
+  static_dir: lib/gae_mini_profiler/static
+
+- url: /gae_mini_profiler/.*
+  script: lib.gae_mini_profiler.main.application
+
+- url: /api/.*
+  script: run.application.app
+
+- url: /login
+  script: run.application.app
+
+- url: /logout
+  script: run.application.app
+
+- url: /digest
+  script: run.application.app
+  login: admin
+
+- url: /vendor.js
+  static_files: application/static/dist/vendor.js
+  upload: application/static/dist/vendor.js
+
+- url: /app.js
+  static_files: application/static/dist/app.js
+  upload: application/static/dist/app.js
+
+- url: /css
+  static_dir: application/static/dist/css
+
+- url: /partials
+  static_dir: application/static/dist/partials
+
+- url: /images
+  static_dir: application/static/dist/images
+
+- url: .*
+  static_files: application/static/dist/index.html
+  upload: application/static/dist/index.html
