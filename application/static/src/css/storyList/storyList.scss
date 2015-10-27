@@ -28,6 +28,25 @@ story-list {
         }
     }
 
+    .mdl-card__media {
+        margin-right: 150px;
+        height: 399px;
+    }
+
+    .colorBlocks {
+        width: 150px;
+        height: 399px;
+        list-style: none;
+        position: absolute;
+        top: 0;
+        right: 0px;
+        margin: 0px;
+
+        li {
+            height: 133px;
+        }
+    }
+
     .voteCount {
         width: 44px;
         height: 44px;

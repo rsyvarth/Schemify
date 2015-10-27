@@ -8,13 +8,18 @@
 
   <div class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col" ng-repeat="story in stories track by story.id">
       <a ui-sref="view({postId: story.id})">
-        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url({{::story.embed.thumbnail_url}})">
-          <h3>{{::story.title}}</h3>
+        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url(https://a.desktopprassets.com/wallpapers/d246ced21e97caa946940551eff6f0a696a91ac3/preview_sky.jpg)">
+          <!-- <h3>{{::story.title}}</h3> -->
         </div>
+        <ul class="colorBlocks">
+          <li style="background-color: #1b4e90;"></li>
+          <li style="background-color: #ffd478;"></li>
+          <li style="background-color: #df7a82;"></li>
+        </ul>
       </a>
-      <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
+      <!-- <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
         {{::story.description}}
-      </div>
+      </div> -->
       <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
         <div class="voteCount">0</div>
         <div>
