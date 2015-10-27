@@ -35,4 +35,4 @@ else:
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 # Pull in URL dispatch routes
-import urls
+import routes

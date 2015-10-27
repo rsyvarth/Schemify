@@ -26,7 +26,7 @@ var StoryService = Class.extend({
 
     this.$http({
       method: 'GET',
-      url: this.baseUrl + '/entries',
+      url: this.baseUrl + '/palettes',
       params: params
     }).then(function(data) {
       deferred.resolve(data.data);
@@ -46,7 +46,7 @@ var StoryService = Class.extend({
 
     this.$http({
       method: 'GET',
-      url: this.baseUrl + '/entries/' + id
+      url: this.baseUrl + '/palettes/' + id
     }).then(function(data) {
       deferred.resolve(data.data);
     }, function(err) {
@@ -62,7 +62,7 @@ var StoryService = Class.extend({
 
     this.$http({
       method: 'POST',
-      url: this.baseUrl + '/entries',
+      url: this.baseUrl + '/palettes',
       data: data
     }).then(function(data) {
       deferred.resolve(data.data);
