@@ -8,7 +8,7 @@
 
   <div class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col" ng-repeat="story in stories track by story.id">
       <a ui-sref="view({postId: story.id})">
-        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url(https://a.desktopprassets.com/wallpapers/d246ced21e97caa946940551eff6f0a696a91ac3/preview_sky.jpg)">
+        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url({{config.baseUrl + 'api/images/' + story.image_id}})">
           <!-- <h3>{{::story.title}}</h3> -->
         </div>
         <ul class="colorBlocks">

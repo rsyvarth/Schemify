@@ -92,11 +92,13 @@ class PaletteList(Resource):
     @login_required
     def post(self):
         parser = reqparse.RequestParser()
+        parser.add_argument('image_id')
         parser.add_argument('title')
         parser.add_argument('description')
 
         args = parser.parse_args()
         palette = PaletteModel(
+            image_id = args['image_id'],
             title = args['title'],
             description = args['description'],
             added_by = users.get_current_user()

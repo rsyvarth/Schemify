@@ -1,5 +1,8 @@
 <form action="#">
-  <p class="mdl-textfield mdl-js-textfield">
+  <p ng-if="imageUrl">
+    <img src="{{imageUrl}}" />
+  </p>
+  <p>
     <div class="btn btn-primary btn-upload mdl-button mdl-js-button mdl-button--raised mdl-button--colored" upload-button url="{{config.baseUrl + 'api/images'}}" on-success="uploadComplete(response)">Add File</div>
   </p>
   <p class="mdl-textfield mdl-js-textfield">

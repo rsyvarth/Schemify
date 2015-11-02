@@ -5,6 +5,7 @@ from UserModel import UserModel
 
 class PaletteModel(ndb.Model):
     """Palette Model"""
+    image_id = ndb.StringProperty(required=True)
     title = ndb.StringProperty(required=True)
     description = ndb.TextProperty(required=True)
     added_by = ndb.UserProperty()
@@ -19,6 +20,7 @@ class PaletteModel(ndb.Model):
         return {
             # 'id': palette.key.urlsafe(),
             'id': palette.key.id(),
+            'image_id': palette.image_id,
             'title': palette.title,
             'description': palette.description,
             'added_by': UserModel.format(palette.added_by),

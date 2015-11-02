@@ -47,12 +47,29 @@ var CreateFormDirective = BaseDirective.extend({
 
   create: function() {
     console.log(this.$scope.form);
+    
+    //Simple error handling
+    if(!this.image) {
+      alert("Image is required!");
+      return;
+    }
+
     this.$scope.loading = true;
+    this.$scope.form.image_id = this.image.id;
     this.storyModel.add(this.$scope.form);
   },
 
   uploadComplete: function(data) {
     console.log(data);
+
+    //Simple error handling
+    if(data.data.message) {
+      alert(data.data.message);
+      return;
+    }
+
+    this.image = data.data;
+    this.$scope.imageUrl = config.baseUrl + 'api/images/' + this.image.id;
   },
 
   entryAdded: function(event, entry) {
