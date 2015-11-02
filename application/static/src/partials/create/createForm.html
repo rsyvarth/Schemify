@@ -1,5 +1,8 @@
 <form action="#">
   <p class="mdl-textfield mdl-js-textfield">
+    <div class="btn btn-primary btn-upload mdl-button mdl-js-button mdl-button--raised mdl-button--colored" upload-button url="{{config.baseUrl + 'api/images'}}" on-success="uploadComplete(response)">Add File</div>
+  </p>
+  <p class="mdl-textfield mdl-js-textfield">
     <input class="mdl-textfield__input" type="text" id="sample1" ng-model="form.title" />
     <label class="mdl-textfield__label" for="sample1">Title...</label>
   </p>
