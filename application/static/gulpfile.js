@@ -82,7 +82,8 @@ gulp.task('css', function () {
  * Concat and uglify all third party javascript and move to dist
  */
 gulp.task('vendorcss', function () {
-    gulp.src(['bower_components/material-design-lite/material.css'])
+    gulp.src(['bower_components/material-design-lite/material.css',
+            'bower_components/angular-upload/src/directives/btnUpload.min.css'])
         .pipe(concat('vendor.css'))
         .pipe(connect.reload())
         .pipe(gulp.dest('dist/css'));
@@ -125,6 +126,7 @@ gulp.task('vendor', function () {
               'bower_components/angular-ui-router/release/angular-ui-router.js',
               'bower_components/moment/moment.js',
               'bower_components/angular-moment/angular-moment.js',
+              'bower_components/angular-upload/angular-upload.js',
               'bower_components/material-design-lite/material.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('vendor.js'))
