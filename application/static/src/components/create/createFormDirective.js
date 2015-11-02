@@ -34,6 +34,7 @@ var CreateFormDirective = BaseDirective.extend({
     this.$scope.loading = false;
 
     this.$scope.create = this.create.bind(this);
+    this.$scope.uploadComplete = this.uploadComplete.bind(this);
   },
 
   /**
@@ -48,6 +49,10 @@ var CreateFormDirective = BaseDirective.extend({
     console.log(this.$scope.form);
     this.$scope.loading = true;
     this.storyModel.add(this.$scope.form);
+  },
+
+  uploadComplete: function(data) {
+    console.log(data);
   },
 
   entryAdded: function(event, entry) {

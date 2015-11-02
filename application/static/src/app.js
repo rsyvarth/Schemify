@@ -18,7 +18,8 @@ var app = angular.module('app', [
 
   'ui.router',
   'pascalprecht.translate',
-  'angularMoment'
+  'angularMoment',
+  'lr.upload'
 ]);
 
 // HTML5 mode allows for routes without the # on modern browsers
