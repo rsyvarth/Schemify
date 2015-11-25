@@ -13,6 +13,7 @@ class PaletteModel(ndb.Model):
     title = ndb.StringProperty(required=True)
     description = ndb.TextProperty(required=True)
     added_by = ndb.UserProperty()
+    added_by_id = ndb.StringProperty(required=True)
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
     updated = ndb.DateTimeProperty(auto_now=True)
 

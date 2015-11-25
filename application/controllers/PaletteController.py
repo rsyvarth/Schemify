@@ -55,11 +55,16 @@ class PaletteList(Resource):
     def get(self):
         parser = reqparse.RequestParser()
         parser.add_argument('cursor')
+        parser.add_argument('user_id')
 
         args = parser.parse_args()
         curs = Cursor(urlsafe=args['cursor'])
 
-        q = PaletteModel.query()
+        if args['user_id'] is not None:
+            q = PaletteModel.query(PaletteModel.added_by_id == args['user_id'])
+        else:
+            q = PaletteModel.query()
+
         q_forward = q.order(-PaletteModel.timestamp)
         q_reverse = q.order(PaletteModel.timestamp)
 
@@ -108,7 +113,8 @@ class PaletteList(Resource):
             color_accent = colors['accent'],
             title = args['title'],
             description = args['description'],
-            added_by = users.get_current_user()
+            added_by = users.get_current_user(),
+            added_by_id = users.get_current_user().user_id()
         )
 
         try:

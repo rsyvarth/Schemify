@@ -14,7 +14,9 @@
 <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
   <div class="voteCount">0</div>
   <div>
-    <strong>{{::story.added_by.username}}</strong>
+    <strong>
+      <a ui-sref="profile({userId: story.added_by.user_id})">{{::story.added_by.username}}</a>
+    </strong>
     <span am-time-ago="story.timestamp | amFromUnix"></span>
   </div>
 </div>

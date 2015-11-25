@@ -16,10 +16,10 @@ var StoryService = Class.extend({
   /**
    * Pull a list of the latest stories
    */
-  getStories: function(cursor) {
+  getStories: function(cursor, filters) {
     var deferred = this.$q.defer();
 
-    var params = {};
+    var params = filters ? filters : {};
     if(cursor) {
       params.cursor = cursor;
     }

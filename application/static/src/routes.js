@@ -20,6 +20,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'partials/view/view.html',
       controller: ViewController
     })
+    .state('profile', {
+      url: '/user/:userId/:page',
+      params: {
+        userId: {value: ''},
+        page: {value: '', squash: true}
+      },
+      templateUrl: 'partials/profile/profile.html',
+      controller: ProfileController
+    })
     .state('home', {
       url: '/:page',
       params: {

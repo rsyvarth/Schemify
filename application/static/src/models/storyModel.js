@@ -32,10 +32,10 @@ var StoryModel = Class.extend({
   /**
    * Load the top stories filtered by read state
    */
-  loadStories: function(cursor) {
+  loadStories: function(cursor, filter) {
     var deferred = this.$q.defer();
 
-    this.storyService.getStories(cursor).then(function(data) {
+    this.storyService.getStories(cursor, filter).then(function(data) {
       var i = 0;
       for(; i < data.entries.length; i++) {
         data.entries[i].timestamp = moment.utc(data.entries[i].timestamp).unix();

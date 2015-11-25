@@ -5,6 +5,7 @@
   "undef": true,
   "globals": { 
     "console": false, 
+    "window": false,
     "Class": false,
     "BaseDirective": true,
     "models": false,
@@ -15,6 +16,8 @@
     "translations": true,
     "componentHandler": false,
     "app": true,
-    "HomeController": true
+    "HomeController": true,
+    "ProfileController": true,
+    "ViewController": true,
   }
 }

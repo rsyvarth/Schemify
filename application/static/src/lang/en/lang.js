@@ -6,6 +6,7 @@ var translations = {
     HOME: 'Home',
     ABOUT: 'About',
     CREATE: 'Create',
+    PROFILE: 'Profile',
     LOGIN: 'Login',
     LOGOUT: 'Logout',
     SUBSCRIBE: 'Subscribe',

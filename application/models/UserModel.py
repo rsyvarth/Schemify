@@ -4,11 +4,6 @@ from google.appengine.ext import ndb
 
 class UserModel(ndb.Model):
     """User Model"""
-    title = ndb.StringProperty(required=True)
-    description = ndb.TextProperty(required=True)
-    added_by = ndb.UserProperty()
-    timestamp = ndb.DateTimeProperty(auto_now_add=True)
-    updated = ndb.DateTimeProperty(auto_now=True)
 
     @staticmethod
     def getSelf():
