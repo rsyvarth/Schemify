@@ -7,6 +7,7 @@ from flask_restful import reqparse, abort, Api, Resource
 
 from ..decorators import login_required, admin_required
 from ..models.PaletteModel import PaletteModel
+from ..services.PaletteService import PaletteService
 
 # Entry
 # shows a single palette item and lets you delete a palette item
@@ -97,8 +98,14 @@ class PaletteList(Resource):
         parser.add_argument('description')
 
         args = parser.parse_args()
+
+        colors = PaletteService.getPalette(args['image_id'])
+        
         palette = PaletteModel(
             image_id = args['image_id'],
+            color_primary = colors['primary'],
+            color_secondary = colors['secondary'],
+            color_accent = colors['accent'],
             title = args['title'],
             description = args['description'],
             added_by = users.get_current_user()
