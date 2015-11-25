@@ -1,32 +1,12 @@
 
-<div class="mdl-grid">
+<div class="mdl-grid  mdl-cell mdl-cell--12-col storyView">
 
   <div class="mdl-card mdl-cell mdl-cell--12-col" ng-show="loading">
     <!-- MDL Spinner Component -->
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
   </div>
 
-  <div class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col" ng-repeat="story in stories track by story.id">
-      <a ui-sref="view({postId: story.id})">
-        <div class="mdl-card__media mdl-color-text--grey-50" style="background-image: url({{config.baseUrl + 'api/images/' + story.image_id}})">
-          <!-- <h3>{{::story.title}}</h3> -->
-        </div>
-        <ul class="colorBlocks">
-          <li style="background-color: {{story.color_primary}};"></li>
-          <li style="background-color: {{story.color_secondary}};"></li>
-          <li style="background-color: {{story.color_accent}};"></li>
-        </ul>
-      </a>
-      <!-- <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
-        {{::story.description}}
-      </div> -->
-      <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <div class="voteCount">0</div>
-        <div>
-          <strong>{{::story.added_by.username}}</strong>
-          <span am-time-ago="story.timestamp | amFromUnix"></span>
-        </div>
-      </div>
+  <div ng-hide="loading" class="mdl-card on-the-road-again mdl-cell mdl-cell--12-col" ng-repeat="story in stories track by story.id" ng-include="'./partials/story/story.html'">
   </div>
 
 </div>

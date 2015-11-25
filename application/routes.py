@@ -23,7 +23,7 @@ api = Api(app)
 api.add_resource(UserSelf, '/api/users/self')
 
 api.add_resource(PaletteList, '/api/palettes')
-api.add_resource(Palette, '/api/palettes/<entry_id>')
+api.add_resource(Palette, '/api/palettes/<palette_id>')
 
 api.add_resource(ImageList, '/api/images')
 api.add_resource(Image, '/api/images/<image_id>')

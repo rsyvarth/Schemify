@@ -1,24 +1,22 @@
 <form action="#">
-  <p ng-if="imageUrl">
-    <img src="{{imageUrl}}" />
-  </p>
-  <p>
-    <div class="btn btn-primary btn-upload mdl-button mdl-js-button mdl-button--raised mdl-button--colored" upload-button url="{{config.baseUrl + 'api/images'}}" on-success="uploadComplete(response)">Add File</div>
-  </p>
-  <p class="mdl-textfield mdl-js-textfield">
+  <p class="mdl-textfield mdl-js-textfield" style="width: ">
     <input class="mdl-textfield__input" type="text" id="sample1" ng-model="form.title" />
     <label class="mdl-textfield__label" for="sample1">Title...</label>
   </p>
-  <br />
-  <p class="mdl-textfield mdl-js-textfield">
-    <textarea class="mdl-textfield__input" type="text" rows="10" cols="100" id="sample5" ng-model="form.description"></textarea>
-    <label class="mdl-textfield__label" for="sample5">Content...</label>
+  <p ng-show="imageUrl">
+    <img src="{{imageUrl}}" style="max-width: 100%;" />
+  </p>
+  <p>
+    <div ng-hide="imageUrl" class="btn btn-primary btn-upload mdl-button mdl-js-button mdl-button--raised mdl-button--colored" upload-button url="{{config.baseUrl + 'api/images'}}" on-success="uploadComplete(response)">Upload Image</div>
   </p>
 </form>
 
 <!-- Colored raised button -->
-<button ng-click="create()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+<button ng-click="create()" ng-show="imageUrl" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
   Submit
+</button>
+<button ng-click="imageUrl=''" ng-show="imageUrl" class="mdl-button mdl-js-button mdl-button--raised">
+  Clear
 </button>
 
 <div class="mdl-spinner mdl-js-spinner is-active" ng-show="loading"></div>

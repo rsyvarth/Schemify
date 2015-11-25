@@ -17,8 +17,8 @@ var translations = {
     BY: 'By Jeremiah Bartlett, Lance Kelley, Robert Syvarth, Jacob Walsh'
   },
   HOME: {
-    BACK: 'Back',
-    FORWARD: 'Forward'
+    BACK: 'Newer',
+    FORWARD: 'Older'
   },
   ABOUT: {
     TITLE: 'About'
