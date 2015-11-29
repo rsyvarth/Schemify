@@ -37,8 +37,10 @@ var StoryModel = Class.extend({
 
     this.storyService.getStories(cursor, filter).then(function(data) {
       var i = 0;
-      for(; i < data.entries.length; i++) {
-        data.entries[i].timestamp = moment.utc(data.entries[i].timestamp).unix();
+      if(data && data.entries) {
+        for(; i < data.entries.length; i++) {
+          data.entries[i].timestamp = moment.utc(data.entries[i].timestamp).unix();
+        }
       }
       this.stories = data;
 
