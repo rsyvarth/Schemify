@@ -6,26 +6,42 @@ describe('StoryModel', function () {
         var model = create(); 
         expect(model.events).to.be.an('object');
         expect(model.$q).to.be.a('function');
-        expect(model.hackerNewsService).to.be.a('object');
-        expect(model.embedService).to.be.a('object');
-        expect(model.readMarkerModel).to.be.a('object');
+        expect(model.storyService).to.be.a('object');
     });
 
     it('should have a loadStories method which returns a promise', function () {
         var model = create(); 
-        sinon.stub(model.hackerNewsService, 'getTopStoryIds', function(){ 
+        sinon.stub(model.storyService, 'getStories', function(){ 
             var deferred = this.$q.defer();
             deferred.resolve([1,2]);
             return deferred.promise;
         });
-        sinon.stub(model, '_getDetails', function(id){ model.stories.push(id); });
 
         var res = model.loadStories();
 
-        model.hackerNewsService.getTopStoryIds.should.have.been.calledOnce;
+        model.storyService.getStories.should.have.been.calledOnce;
 
         res.then(function(){
             expect(model.stories).to.be.deep.equal([1,2]);
+        });
+    });
+
+    it('should have a loadStory method which returns a promise', function () {
+        var model = create(); 
+        sinon.stub(model.storyService, 'getStory', function(id){ 
+            var deferred = this.$q.defer();
+            deferred.resolve([id,2]);
+            return deferred.promise;
+        });
+
+        var res = model.loadStory(1);
+
+        model.storyService.getStory.should.have.been.calledOnce;
+
+        res.then(function(){
+            expect(model.story[0]).to.be.equal(1);
+            expect(model.story[1]).to.be.equal(2);
+            expect(model.story['timestamp']).to.exist;
         });
     });
 
@@ -40,40 +56,32 @@ describe('StoryModel', function () {
     });
 
 
-    it('should have a loadStories method which returns a promise', function () {
+    it('should have a getStory method which returns a story', function () {
         var model = create(); 
-        sinon.stub(model.readMarkerModel, 'saveId', function(){});
-        var story = {id: 2};
-        var res = model.setRead(story, true);
+        model.story = [1,2];
 
-        expect(story.read).to.equal(true);
-        model.readMarkerModel.saveId.should.have.been.calledWith(2, true);
+        var res = model.getStory();
+
+        expect(res).to.be.deep.equal([1,2]);
     });
 
 
-    it('should have a _getDetails method which returns a promise', function () {
+    it('should have a add method which returns a promise', function () {
         var model = create(); 
-        sinon.stub(model.hackerNewsService, 'getStoryDetails', function(id){ 
+        sinon.stub(model.storyService, 'add', function(data){ 
             var deferred = this.$q.defer();
-            deferred.resolve({id: id, url: 'test'});
+            deferred.resolve(data);
             return deferred.promise;
         });
-        sinon.stub(model.embedService, 'getEmbed', function(url){ 
-            var deferred = this.$q.defer();
-            deferred.resolve({key: url});
-            return deferred.promise;
-        });
-        sinon.stub(model.readMarkerModel, 'isRead', function(id){ return false; });
 
-        var res = model._getDetails(1);
+        var res = model.add({test: 1});
 
+        model.storyService.add.should.have.been.calledOnce;
 
         res.then(function(){
-            model.hackerNewsService.getStoryDetails.should.have.been.calledWith(1);
-            model.embedService.getEmbed.should.have.been.calledWith('test');
-            model.readMarkerModel.isRead.should.have.been.calledWith(1);
-            expect(model.stories).to.be.deep.equal([{id: 1, url: 'test', read: false, embed: {key: 'test'}}]);
+            expect(model.story).to.be.deep.equal({test: 1});
         });
     });
+
 
 });

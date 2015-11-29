@@ -36,10 +36,10 @@ describe('StoryService', function () {
         var back;
         var data = {data: ['1','2']};
         var service = create(function($httpBackend){
-            $httpBackend.when('GET', /.+\/palettes?cursor=123&user_id=1/)
+            $httpBackend.when('GET', /.+\/palettes\?cursor=123&user_id=1/)
                 .respond(data);
 
-            $httpBackend.expectGET(/.+\/palettes?cursor=123&user_id=1/);
+            $httpBackend.expectGET(/.+\/palettes\?cursor=123&user_id=1/);
             back = $httpBackend;
         });
 
