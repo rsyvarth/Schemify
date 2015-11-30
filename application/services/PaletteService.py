@@ -9,23 +9,27 @@ class PaletteService():
     @staticmethod
     def getPalette(image_id):
 
+        amount_to_consider = 40 
         image = ImageModel.get_by_id(int(image_id))
-        
-        colors = PaletteService.get_colors(image.image)
+        colors = [item[1] for item in PaletteService.get_colors(image.image)[:amount_to_consider]]
 
+        baseColor = colors[0]
 
-        baseColor = colors[0][1]
-        distances = []
+        def distance_from_base(color):
+            return PaletteService.color_distance(baseColor, color)
 
-        for color in colors[:20]:
-            distances.append(PaletteService.color_distance(baseColor, color[1]))
+        #sort top colors by distance
+        colors.sort(cmp=lambda x,y: distance_from_base(x) < distance_from_base(y));
 
-        complIndex = distances.index(max(distances))
+        complIndex1 = len(colors)/2
+        complIndex2 = len(colors) -1
 
         return {
-            'primary' : PaletteService.rgb_to_hex(colors[0][1]), 
-            'secondary' : PaletteService.rgb_to_hex(colors[1][1]),
-            'accent' : PaletteService.rgb_to_hex(colors[complIndex][1]),
+            'primary' : PaletteService.rgb_to_hex(colors[0]), 
+
+            'secondary' : PaletteService.rgb_to_hex(colors[complIndex1]),
+
+            'accent' : PaletteService.rgb_to_hex(colors[complIndex2]),
         }
 
 
@@ -34,7 +38,7 @@ class PaletteService():
 
         image = Image.open(io.BytesIO(inImage))
         image = image.resize((resize, resize))
-        result = image.convert('RGB', palette=Image.ADAPTIVE, colors=numcolors)
+        result = image.convert('P', colors=numcolors)
         result.putalpha(0)
         colors = result.getcolors(resize*resize)
 
