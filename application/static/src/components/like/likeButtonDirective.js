@@ -39,7 +39,7 @@ var LikeButtonDirective = BaseDirective.extend({
   },
 
   likeUpdated: function(event, palette_id, like) {
-    if(this.$scope.story.id == palette_id) {
+    if(this.$scope.story.id === palette_id) {
       if(like && like.id) {
         this.$scope.story.like_count++;
         this.$scope.story.user_like = like;

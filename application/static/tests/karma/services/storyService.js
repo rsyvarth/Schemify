@@ -27,8 +27,8 @@ describe('StoryService', function () {
 
         back.flush();
 
-        res.then(function(data){
-            expect(data).to.equal(data);
+        res.then(function(resp){
+            expect(resp).to.deep.equal(data);
         });
     });
 
@@ -46,8 +46,8 @@ describe('StoryService', function () {
         var res = service.getStories(123, {user_id: 1});
         back.flush();
 
-        res.then(function(data){
-            expect(data).to.equal(data);
+        res.then(function(resp){
+            expect(resp).to.deep.equal(data);
         });
     });
 
@@ -70,8 +70,8 @@ describe('StoryService', function () {
 
         back.flush();
 
-        res.then(function(data){
-            expect(data).to.equal(data);
+        res.then(function(resp){
+            expect(resp).to.deep.equal(data);
         });
     });
 
@@ -94,8 +94,8 @@ describe('StoryService', function () {
 
         back.flush();
 
-        res.then(function(data){
-            expect(data).to.equal(data);
+        res.then(function(resp){
+            expect(resp).to.deep.equal(data);
         });
     });
 
