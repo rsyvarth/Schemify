@@ -27,8 +27,8 @@ describe('UserService', function () {
 
         back.flush();
 
-        res.then(function(data){
-            expect(data).to.equal(data);
+        res.then(function(resp){
+            expect(resp).to.equal(data);
         });
     });
 

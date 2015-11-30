@@ -25,7 +25,7 @@ class PaletteService():
 
         image = Image.open(io.BytesIO(inImage))
         image = image.resize((resize, resize))
-        result = image.convert('P', palette=Image.ADAPTIVE, colors=numcolors)
+        result = image.convert('RGB', palette=Image.ADAPTIVE, colors=numcolors)
         result.putalpha(0)
         colors = result.getcolors(resize*resize)
 
