@@ -47,6 +47,17 @@ story-list {
 
         li {
             height: 133px;
+            text-align: center;
+            span {
+                line-height: 133px;
+                color: transparent;
+            }
+
+            &:hover {
+                span {
+                    color: #444;
+                }
+            }
         }
     }
 
