@@ -7,6 +7,8 @@ TODO: These tests need to be updated to support the Python 2.7 runtime
 
 """
 import os
+import io
+import json
 import unittest
 
 from google.appengine.ext import testbed
@@ -35,48 +37,81 @@ class DemoTestCase(unittest.TestCase):
         os.environ['USER_ID'] = user_id or ''
         os.environ['USER_IS_ADMIN'] = '1' if is_admin else '0'
 
-    def test_home_redirects(self):
-        rv = self.app.get('/')
-        assert rv.status == '302 FOUND'    
 
-    def test_says_hello(self):
-        rv = self.app.get('/hello/world')
-        assert 'Hello world' in rv.data
+    def uploadImage(self):
+        with open ("tests/test.png", "rb") as myfile:
+            data=myfile.read()
 
-    def test_displays_no_data(self):
-        rv = self.app.get('/examples')
-        assert 'No examples yet' in rv.data
-
-    def test_inserts_data(self):
         self.setCurrentUser(u'john@example.com', u'123')
-        rv = self.app.post('/example/new', data=dict(
-            example_name='An example',
-            example_description='Description of an example'
-        ), follow_redirects=True)
-        assert 'Example successfully saved' in rv.data
+        rv = self.app.post('/api/images', data = {
+            'file': (io.BytesIO(data), 'test.png'),
+        })
 
-        rv = self.app.get('/examples')
-        assert 'No examples yet' not in rv.data
-        assert 'An example' in rv.data
-    
-    def test_admin_login(self):
-        #Anonymous
-        rv = self.app.get('/admin_only')
-        assert rv.status == '302 FOUND'
-        #Normal user
+        return json.loads(rv.data)['id']
+
+    def addPalette(self):
         self.setCurrentUser(u'john@example.com', u'123')
-        rv = self.app.get('/admin_only')
-        assert rv.status == '302 FOUND'
-        #Admin
-        self.setCurrentUser(u'john@example.com', u'123', True)
-        rv = self.app.get('/admin_only')
+        id = self.uploadImage()
+
+        rv = self.app.post('/api/palettes', data=dict(
+            title = 'Test', 
+            image_id = id,
+            description = ''
+        ))
+
+        assert rv.status == '201 CREATED'
+        return json.loads(rv.data)
+
+    ############################################################
+    # PALETTE TESTS
+    ############################################################
+
+    def test_empty_palette_list(self):
+        rv = self.app.get('/api/palettes')
         assert rv.status == '200 OK'
+        assert '{"meta": {"next_curs": "", "curs": "", "prev_curs": ""}, "entries": []}' in rv.data
 
-    def test_404(self):
-        rv = self.app.get('/missing')
-        assert rv.status == '404 NOT FOUND'
-        assert '<h1>Not found</h1>' in rv.data
+    def test_add_palette(self):
+        resp = self.addPalette()
+        assert resp['image_id'] == '1'
+        assert resp['title'] == 'Test'
 
+    def test_palette_list(self):
+        self.addPalette()
+        self.addPalette()
+        self.addPalette()
+
+        rv = self.app.get('/api/palettes')
+        resp = json.loads(rv.data)
+
+        assert len(resp['entries']) == 3
+
+    def test_palette_paging(self):
+        for i in range(0, 15):
+            self.addPalette()
+
+        rv = self.app.get('/api/palettes')
+        resp = json.loads(rv.data)
+        assert len(resp['entries']) == 10
+
+        rv = self.app.get('/api/palettes?cursor='+resp['meta']['next_curs'])
+        resp = json.loads(rv.data)
+
+        assert len(resp['entries']) == 5
     
+    ############################################################
+    # USER TESTS
+    ############################################################
+
+    def test_user_self(self):
+        self.setCurrentUser(u'john@example.com', u'123')
+
+        rv = self.app.get('/api/users/self')
+        resp = json.loads(rv.data)
+
+        assert resp['username'] == 'john@example.com'
+        assert resp['user_id'] == '123'
+
+
 if __name__ == '__main__':
     unittest.main()
