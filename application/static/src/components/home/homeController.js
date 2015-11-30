@@ -31,10 +31,10 @@ var HomeController = Class.extend({
    * when the changes are loaded)
    */
   setupScope: function() {
-    // Cast the page number to an integer (params are strings by default)
     this.$scope.currPage = this.$stateParams.page;
+    this.$scope.sort = this.$stateParams.sort;
 
-    this.storyModel.loadStories(this.$scope.currPage);
+    this.storyModel.loadStories(this.$scope.currPage, {sort: this.$scope.sort});
 
     this.storiesLoaded = this.storiesLoaded.bind(this);
     this.events.addEventListener(models.events.ENTRIES_LOADED, this.storiesLoaded);

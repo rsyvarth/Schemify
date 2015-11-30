@@ -253,3 +253,12 @@ body {
   padding: 40px;
   box-sizing: border-box;
 }
+
+.demo-blog .demo-blog__posts > .demo-nav .mdl-button {
+  margin-left: 10px;
+}
+
+.demo-blog .demo-blog__posts > .demo-nav .mdl-button.active {
+  background: #777;
+  color: #fff;
+}

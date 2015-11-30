@@ -1,8 +1,21 @@
 
+
+<nav class="demo-nav mdl-cell mdl-cell--12-col">
+    <div class="section-spacer"></div>
+
+    <button ng-class="sort == 'recent' ? 'active' : ''" ui-sref="home({page: '', sort: 'recent'})" class="mdl-button mdl-js-button mdl-button--primary">
+      Recent
+    </button>
+
+    <button ng-class="sort == 'likes' ? 'active' : ''" ui-sref="home({page: '', sort: 'likes'})" class="mdl-button mdl-js-button mdl-button--accent">
+      Popular
+    </button>
+</nav>
+
 <story-list></story-list> 
 
 <nav class="demo-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
-    <a ui-sref="home({page: '{{meta.prev_curs}}' })" class="demo-nav__button" ng-if="meta.prev_curs">
+    <a ui-sref="home({page: '{{meta.prev_curs}}', sort: sort})" class="demo-nav__button" ng-if="meta.prev_curs">
       <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
         <i class="material-icons">arrow_back</i>
       </button>
@@ -11,7 +24,7 @@
 
     <div class="section-spacer"></div>
 
-    <a ui-sref="home({page: '{{meta.next_curs}}' })" class="demo-nav__button" ng-if="meta.next_curs">
+    <a ui-sref="home({page: '{{meta.next_curs}}', sort: sort})" class="demo-nav__button" ng-if="meta.next_curs">
       <span translate>HOME.FORWARD</span>
       <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
         <i class="material-icons">arrow_forward</i>
