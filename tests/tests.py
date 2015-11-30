@@ -16,7 +16,7 @@ from google.appengine.ext import testbed
 from application import app
 
 
-class DemoTestCase(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         # Flask apps testing. See: http://flask.pocoo.org/docs/testing/
         app.config['TESTING'] = True
@@ -60,6 +60,13 @@ class DemoTestCase(unittest.TestCase):
         ))
 
         assert rv.status == '201 CREATED'
+        return json.loads(rv.data)
+
+    def addLike(self, palette_id):
+        rv = self.app.post('/api/likes', data = {
+            'palette_id': palette_id
+        })
+
         return json.loads(rv.data)
 
     ############################################################
@@ -111,6 +118,79 @@ class DemoTestCase(unittest.TestCase):
 
         assert resp['username'] == 'john@example.com'
         assert resp['user_id'] == '123'
+
+    ############################################################
+    # LIKE TESTS
+    ############################################################
+
+    def test_empty_like_list(self):
+        rv = self.app.get('/api/likes?palette_id=1')
+        assert rv.status == '200 OK'
+        assert '{"meta": {"next_curs": "", "curs": "", "prev_curs": ""}, "likes": []}' in rv.data
+
+    def test_add_like(self):
+        palette = self.addPalette()
+        assert palette['like_count'] == 0
+
+        self.setCurrentUser(u'john2@example.com', u'12')
+        resp = self.addLike(palette['id'])
+
+        assert int(resp['palette_id']) == int(palette['id'])
+        assert resp['added_by']['user_id'] == '12'
+
+        rv = self.app.get('/api/palettes/'+str(palette['id']))
+        updatedPalette = json.loads(rv.data)
+        assert updatedPalette['like_count'] == 1
+
+    def test_add_likes(self):
+        palette = self.addPalette()
+        assert palette['like_count'] == 0
+
+        self.setCurrentUser(u'john2@example.com', u'12')
+        resp = self.addLike(palette['id'])
+        self.setCurrentUser(u'john3@example.com', u'13')
+        resp = self.addLike(palette['id'])
+        self.setCurrentUser(u'john4@example.com', u'14')
+        resp = self.addLike(palette['id'])
+
+        rv = self.app.get('/api/palettes/'+str(palette['id']))
+        updatedPalette = json.loads(rv.data)
+        assert updatedPalette['like_count'] == 3
+
+    def test_add_multiple_likes(self):
+        palette = self.addPalette()
+        assert palette['like_count'] == 0
+
+        self.setCurrentUser(u'john2@example.com', u'12')
+        resp = self.addLike(palette['id'])
+        resp = self.addLike(palette['id'])
+        resp = self.addLike(palette['id'])
+
+        rv = self.app.get('/api/palettes/'+str(palette['id']))
+        updatedPalette = json.loads(rv.data)
+        assert updatedPalette['like_count'] == 1
+
+
+    def test_remove_likes(self):
+        palette = self.addPalette()
+        assert palette['like_count'] == 0
+
+        self.setCurrentUser(u'john2@example.com', u'12')
+        resp = self.addLike(palette['id'])
+        self.setCurrentUser(u'john3@example.com', u'13')
+        resp = self.addLike(palette['id'])
+        self.setCurrentUser(u'john4@example.com', u'14')
+        resp = self.addLike(palette['id'])
+
+        rv = self.app.get('/api/palettes/'+str(palette['id']))
+        updatedPalette = json.loads(rv.data)
+        assert updatedPalette['like_count'] == 3
+
+        t = self.app.delete('/api/likes?palette_id='+str(palette['id']))
+
+        rv = self.app.get('/api/palettes/'+str(palette['id']))
+        updatedPalette = json.loads(rv.data)
+        assert updatedPalette['like_count'] == 2
 
 
 if __name__ == '__main__':

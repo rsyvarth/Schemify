@@ -20,6 +20,7 @@ class Palette(Resource):
 
         return PaletteModel.format(palette), 200
 
+    @login_required
     def delete(self, palette_id):
         palette = PaletteModel.get_by_id(int(palette_id))
         if palette is None:
@@ -27,6 +28,7 @@ class Palette(Resource):
         palette.delete()
         return '', 204
 
+    @login_required
     def put(self, palette_id):
         parser = reqparse.RequestParser()
         parser.add_argument('title')

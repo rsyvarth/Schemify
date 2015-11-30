@@ -13,6 +13,7 @@ from application import app
 from controllers.AuthController import login, logout
 from controllers.PaletteController import Palette, PaletteList
 from controllers.ImageController import Image, ImageList
+from controllers.LikeController import Like, LikeList
 from controllers.UserController import UserSelf
 
 # Allow cross domain requests from localhost 
@@ -27,6 +28,9 @@ api.add_resource(Palette, '/api/palettes/<palette_id>')
 
 api.add_resource(ImageList, '/api/images')
 api.add_resource(Image, '/api/images/<image_id>')
+
+api.add_resource(LikeList, '/api/likes')
+api.add_resource(Like, '/api/likes/<like_id>')
 
 # Login page
 app.add_url_rule('/login', 'login', view_func=login)
