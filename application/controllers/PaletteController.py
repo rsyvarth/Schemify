@@ -58,6 +58,7 @@ class PaletteList(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('cursor')
         parser.add_argument('user_id')
+        parser.add_argument('sort')
 
         args = parser.parse_args()
         curs = Cursor(urlsafe=args['cursor'])
@@ -67,11 +68,14 @@ class PaletteList(Resource):
         else:
             q = PaletteModel.query()
 
-        q_forward = q.order(-PaletteModel.timestamp)
-        q_reverse = q.order(PaletteModel.timestamp)
-
+        if args['sort'] is not None and args['sort'] == 'likes':
+            q_forward = q.order(-PaletteModel.like_count)
+            q_reverse = q.order(PaletteModel.like_count)
+        else:
+            q_forward = q.order(-PaletteModel.timestamp)
+            q_reverse = q.order(PaletteModel.timestamp)            
+            
         entries, next_curs, more = q_forward.fetch_page(10, start_cursor=curs)
-
 
         out = []
         for palette in entries:
