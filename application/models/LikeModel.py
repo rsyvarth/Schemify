@@ -13,7 +13,7 @@ class LikeModel(ndb.Model):
     @staticmethod
     def format(like):
         if like is None or like.timestamp is None:
-            return {}
+            return False
 
         return {
             'id': like.key.id(),

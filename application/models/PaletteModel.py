@@ -1,7 +1,9 @@
 
+from google.appengine.api import users
 
 from google.appengine.ext import ndb
 from UserModel import UserModel
+from LikeModel import LikeModel
 
 class PaletteModel(ndb.Model):
     """Palette Model"""
@@ -40,6 +42,11 @@ class PaletteModel(ndb.Model):
         if palette is None or palette.timestamp is None:
             return {}
 
+        like = LikeModel.query(ndb.AND(
+            LikeModel.palette_id == str(palette.key.id()), 
+            LikeModel.added_by == users.get_current_user()
+        )).get()
+
         return {
             # 'id': palette.key.urlsafe(),
             'id': palette.key.id(),
@@ -47,6 +54,8 @@ class PaletteModel(ndb.Model):
             'color_primary': palette.color_primary,
             'color_secondary': palette.color_secondary,
             'color_accent': palette.color_accent,
+
+            'user_like': LikeModel.format(like),
             
             'title': palette.title,
             'description': palette.description,

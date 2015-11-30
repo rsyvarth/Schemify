@@ -10,10 +10,14 @@ var app = angular.module('app', [
   'story.StoryService',
 
   'loginButton',
-  'subscribeButton',
+  // 'subscribeButton',
   'user.UserModel',
   'user.UserService',
 
+  'likeButton',
+  'like.LikeModel',
+  'like.LikeService',
+  
   'createForm',
 
   'ui.router',
