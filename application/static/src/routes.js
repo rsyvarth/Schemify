@@ -30,8 +30,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
       controller: ProfileController
     })
     .state('home', {
-      url: '/:page',
+      url: '/:sort/:page',
       params: {
+        sort: {value: 'recent'},
         page: {value: '', squash: true}
       },
       templateUrl: 'partials/home/home.html',
