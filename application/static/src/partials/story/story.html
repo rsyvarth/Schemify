@@ -12,7 +12,7 @@
   {{::story.description}}
 </div> -->
 <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-  <like-button class="voteCount" story="story" ng-click="story.toggleLike()">{{story.like_count}}</like-button>
+  <like-button class="voteCount" story="story" ng-click="story.toggleLike()" ng-class="story.liked ? 'active' : ''">{{story.like_count}}</like-button>
   <div>
     <strong>
       <a ui-sref="profile({userId: story.added_by.user_id})">{{::story.added_by.username}}</a>

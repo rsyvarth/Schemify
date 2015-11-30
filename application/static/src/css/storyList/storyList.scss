@@ -59,6 +59,11 @@ story-list {
         line-height: 44px;
         font-size: 1.2em;
         cursor: pointer;
+        
+        &.active {
+            background: #777;
+            color: #fff;
+        }
     }
 
     .mdl-spinner {
